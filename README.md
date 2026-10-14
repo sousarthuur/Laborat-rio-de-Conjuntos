@@ -136,6 +136,20 @@ O registro completo está em [RESULTADOS_TESTES.md](RESULTADOS_TESTES.md).
 
 O relatório final está em [RELATORIO_FINAL.pdf](RELATORIO_FINAL.pdf).
 
+## Checklist do trabalho
+
+- [x] Menu principal com acesso às três partes.
+- [x] Operações de conjuntos feitas manualmente e conferidas com `set`.
+- [x] União, interseção, diferenças, diferença simétrica, pertinência, inclusões, cardinalidade e complemento.
+- [x] Casos com conjunto vazio, conjuntos iguais, disjuntos, contidos e elementos repetidos.
+- [x] Classificação de inteiros, frações, decimais, dízimas e raízes.
+- [x] Identificação de dízimas simples e compostas e cálculo da fração geratriz.
+- [x] Convenção `0 ∈ N` explicada.
+- [x] Bônus de números primos e divisores.
+- [x] Recomendação por interesses usando o índice de Jaccard.
+- [x] Logs reais das três partes e testes automatizados.
+- [x] Relatório final com nomes, RAs e explicação do projeto.
+
 ## Repositório
 
 <https://github.com/sousarthuur/Laborat-rio-de-Conjuntos>
