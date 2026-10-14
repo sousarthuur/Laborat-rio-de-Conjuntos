@@ -58,6 +58,7 @@ def calcular_fracao_geratriz(texto):
     sinal, inteira, nao_periodica, periodo = resultado.groups()
     quantidade_nao_periodica = len(nao_periodica)
     quantidade_periodo = len(periodo)
+    tipo_dizima = "simples" if quantidade_nao_periodica == 0 else "composta"
 
     # Ex.: 1,2(5): 125 - 12, dividido por 10 × 9.
     bloco_com_periodo = int(inteira + nao_periodica + periodo)
@@ -69,13 +70,13 @@ def calcular_fracao_geratriz(texto):
     fracao = Fraction(numerador, denominador)
 
     etapas = (
-        f"parte inteira={inteira}, parte não periódica="
+        f"dízima periódica {tipo_dizima}; parte inteira={inteira}, parte não periódica="
         f"{nao_periodica or 'vazia'}, período={periodo}; "
         f"cálculo=({bloco_com_periodo} − {bloco_sem_periodo})/{denominador}"
     )
     if sinal == "-":
         etapas += ", com sinal negativo"
-    return fracao, etapas
+    return fracao, etapas, tipo_dizima
 
 
 def classificar_raiz(texto):
@@ -134,10 +135,10 @@ def classificar_numero(entrada):
         return resultado
 
     if "(" in texto or ")" in texto:
-        valor, etapas = calcular_fracao_geratriz(texto)
+        valor, etapas, tipo_dizima = calcular_fracao_geratriz(texto)
         return {
             "entrada": entrada,
-            "tipo": "dízima periódica",
+            "tipo": f"dízima periódica {tipo_dizima}",
             "valor": valor,
             "interpretacao": f"{etapas}; geratriz simplificada={valor}",
             "conjuntos": classificar_racional(valor),
@@ -150,7 +151,8 @@ def classificar_numero(entrada):
         interpretacao = f"fração simplificada: {valor}"
     else:
         valor = converter_decimal(texto)
-        tipo = "inteiro" if valor.denominator == 1 and not any(c in texto for c in ",.") else "decimal exato"
+        eh_inteiro_escrito = valor.denominator == 1 and not any(c in texto for c in ",.")
+        tipo = "inteiro" if eh_inteiro_escrito else "decimal exato"
         interpretacao = f"valor exato representado por {valor}"
 
     conjuntos = classificar_racional(valor)
@@ -159,7 +161,10 @@ def classificar_numero(entrada):
         if valor >= 0:
             justificativa += " Pela convenção N = {0, 1, 2, ...}, também é natural."
     else:
-        justificativa = "É uma razão entre inteiros com denominador não nulo; logo, é racional e real."
+        justificativa = (
+            "É uma razão entre inteiros com denominador não nulo; "
+            "logo, é racional e real."
+        )
     return {
         "entrada": entrada,
         "tipo": tipo,
@@ -174,7 +179,8 @@ def exibir_classificacao(resultado):
     print(f"Entrada: {resultado['entrada']}")
     print(f"Tipo: {resultado['tipo']}")
     print(f"Interpretação: {resultado['interpretacao']}")
-    print(f"Pertence a: {nomes_conjuntos(resultado['conjuntos']) or 'nenhum entre N, Z, Q, I e R'}")
+    nomes = nomes_conjuntos(resultado["conjuntos"])
+    print(f"Pertence a: {nomes or 'nenhum entre N, Z, Q, I e R'}")
     print(f"Justificativa: {resultado['justificativa']}")
 
 
@@ -214,7 +220,12 @@ def ler_inteiro(mensagem):
 def executar_parte2():
     while True:
         print("\nPARTE 2 — CONJUNTOS NUMÉRICOS (0 pertence a N)")
-        print("1 - Classificar número\n2 - Bônus: gerar primos\n3 - Bônus: listar divisores\n0 - Voltar")
+        print(
+            "1 - Classificar número\n"
+            "2 - Bônus: gerar primos\n"
+            "3 - Bônus: listar divisores\n"
+            "0 - Voltar"
+        )
         opcao = input("Escolha: ").strip()
         if opcao == "0":
             return

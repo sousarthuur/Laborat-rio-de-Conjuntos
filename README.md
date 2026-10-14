@@ -31,7 +31,7 @@ Um número pode estar em vários conjuntos: `7` está em N, Z, Q e R, pois tamb�
 ├── parte3_recomendacao.py     # cadastro e índice de Jaccard
 ├── testes.py                  # testes automatizados
 ├── RESULTADOS_TESTES.md       # registro da execução real
-├── RELATORIO_MODELO.md        # modelo adaptável de relatório
+├── RELATORIO.md               # relatório final de uma página
 └── README.md
 ```
 
@@ -51,7 +51,7 @@ python -m unittest -v testes.py
 
 ## Parte 1 — implementação e exemplos
 
-Os elementos são lidos como textos separados por vírgula. Isso permite conjuntos de números, nomes ou palavras. A entrada vazia é `∅`. `remover_repetidos`, `uniao`, `intersecao`, `diferenca`, `diferenca_simetrica`, `esta_contido`, `inclusao_propria`, `cardinalidade` e `complemento` usam estruturas básicas. Apenas `validacao_nativa` usa `set` e seus operadores, depois do cálculo manual.
+Os elementos são lidos como textos separados por vírgula. Isso permite conjuntos de números, nomes ou palavras. A entrada vazia é `∅`. O submenu permite escolher cada operação ou executar todas. `pertence`, `remover_repetidos`, `uniao`, `intersecao`, `diferenca`, `diferenca_simetrica`, `esta_contido`, `inclusao_propria`, `cardinalidade` e `complemento` usam somente laços, comparações e condicionais. A implementação manual não usa `in`, `not in` nem operadores de `set`. A camada de validação usa os recursos nativos somente depois dos cálculos manuais.
 
 Entradas e resultados esperados/obtidos nos testes:
 
@@ -64,6 +64,27 @@ Entradas e resultados esperados/obtidos nos testes:
 | Contido | A={1,2}; B={1,2,3} | A⊂B verdadeiro |
 | Pertinência | A={1,2,3} | 3∈A verdadeiro; 5∈A falso |
 | Complemento | A={1,2,3,4}; U={1,...,10} | Aᶜ={5,6,7,8,9,10} |
+
+Trecho de uma execução real da opção **Mostrar e validar todas as operações**:
+
+```text
+A ∪ B
+  Resultado manual: {1, 2, 3, 4, 5, 6}
+  Resultado nativo: {1, 2, 3, 4, 5, 6}
+  Resultados iguais? True
+
+'3' ∈ A
+  Resultado manual: True
+  Resultado nativo: True
+  Resultados iguais? True
+
+Cardinalidade de A
+  Resultado manual: 4
+  Resultado nativo: 4
+  Resultados iguais? True
+```
+
+As demais operações da mesma execução também produziram `Resultados iguais? True`, incluindo interseção, duas diferenças, diferença simétrica, quatro inclusões e complemento.
 
 ## Parte 2 — precisão, fórmulas e explicação
 
@@ -98,6 +119,19 @@ Para `√n`, com `n` inteiro não negativo, `math.isqrt` encontra a parte inteir
 
 Também foram realmente testados: denominador zero, duas barras, decimal malformado, período vazio, parêntese incompleto, texto e entrada vazia; todos geram `ValueError` tratado pela interface. O bônus devolve os primos até 30 e os divisores de 36 indicados no PDF.
 
+Trecho de execução real de uma dízima composta:
+
+```text
+Entrada: 1,2(5)
+Tipo: dízima periódica composta
+Interpretação: parte inteira=1, parte não periódica=2, período=5;
+cálculo=(125 − 12)/90; geratriz simplificada=113/90
+Pertence a: Q, R
+Justificativa: Toda dízima periódica possui fração geratriz e é racional.
+```
+
+O programa apresenta `dízima periódica simples` quando não existe trecho não periódico, como em `0,(3)`, e `dízima periódica composta` quando esse trecho existe, como em `1,2(5)`.
+
 ### Como explicar a Parte 2 ao professor
 
 O programa identifica primeiro o formato da entrada, em vez de classificá-la apenas pela aparência. Inteiros, decimais finitos, frações e dízimas tornam-se `Fraction`, que preserva o valor exato. Se o denominador simplificado é 1, o valor está em Z e, se não negativo, também em N. Todo `Fraction` está em Q e R. Uma dízima é racional porque sua repetição permite montar uma fração geratriz. Nas raízes inteiras, a igualdade `isqrt(n)² == n` separa raízes exatas de raízes irracionais. Os testes comparam cada conjunto identificado ao gabarito e verificam erros.
@@ -125,6 +159,14 @@ No exemplo do PDF: Ana×Bia tem `2/6 ≈ 0,33`; Ana×Caio, `2/5 = 0,40`; Bia×Ca
 
 Conclusão dos cenários: as saídas efetivas coincidiram com os resultados esperados. O detalhamento da execução automatizada e do teste integrado está em `RESULTADOS_TESTES.md`.
 
+Trecho da execução real para Ana:
+
+```text
+Ana × Bia: comuns={cinema, jazz}; |interseção|=2; |união|=6; J=0.33 (33.3%)
+Ana × Caio: comuns={cinema, games}; |interseção|=2; |união|=5; J=0.40 (40.0%)
+Maior afinidade: Caio
+```
+
 ## Publicação no GitHub
 
 Repositório do projeto: <https://github.com/sousarthuur/Laborat-rio-de-Conjuntos>
@@ -149,5 +191,5 @@ Não publique dados pessoais ou credenciais. A equipe deve gerar os próprios pr
 - [x] Crivo e divisores do bônus.
 - [x] Recomendação Jaccard, cadastro, múltiplos usuários, empate e vazio.
 - [x] Testes automatizados e resultado real registrado.
-- [x] Modelo de relatório de uma página.
+- [x] Relatório final de uma página.
 - [x] Publicação no GitHub e logs finais registrados.

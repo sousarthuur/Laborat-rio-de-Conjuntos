@@ -25,9 +25,23 @@ class TestesParte1(unittest.TestCase):
 
     def test_complemento_e_pertinencia(self):
         universo = [str(n) for n in range(1, 11)]
-        self.assertEqual(p1.complemento(["1", "2", "3", "4"], universo), ["5", "6", "7", "8", "9", "10"])
-        self.assertIn("3", ["1", "2", "3"])
-        self.assertNotIn("5", ["1", "2", "3"])
+        self.assertEqual(
+            p1.complemento(["1", "2", "3", "4"], universo),
+            ["5", "6", "7", "8", "9", "10"],
+        )
+        self.assertTrue(p1.pertence("3", ["1", "2", "3"]))
+        self.assertFalse(p1.pertence("5", ["1", "2", "3"]))
+
+    def test_todas_as_validacoes_nativas(self):
+        a, b, universo = ["1", "2"], ["2", "3"], ["1", "2", "3"]
+        manuais = p1.resultados_manuais(a, b, universo, "1")
+        nativos = p1.validacao_nativa(a, b, universo, "1")
+        for nome, manual in manuais.items():
+            with self.subTest(operacao=nome):
+                if isinstance(manual, list):
+                    self.assertEqual(set(manual), nativos[nome])
+                else:
+                    self.assertEqual(manual, nativos[nome])
 
 
 class TestesParte2(unittest.TestCase):
@@ -52,6 +66,8 @@ class TestesParte2(unittest.TestCase):
         self.assertEqual(p2.calcular_fracao_geratriz("1,2(5)")[0], Fraction(113, 90))
         self.assertEqual(p2.calcular_fracao_geratriz("0,(9)")[0], Fraction(1, 1))
         self.assertEqual(p2.calcular_fracao_geratriz("-0,1(6)")[0], Fraction(-1, 6))
+        self.assertEqual(p2.classificar_numero("0,(3)")["tipo"], "dízima periódica simples")
+        self.assertEqual(p2.classificar_numero("1,2(5)")["tipo"], "dízima periódica composta")
 
     def test_invalidos(self):
         for entrada in ("", "1/0", "1//2", "1,", "0,()", "0,(3", "abc"):
