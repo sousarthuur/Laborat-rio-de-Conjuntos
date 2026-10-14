@@ -34,7 +34,7 @@ python -m unittest -v testes.py
 | `parte3_recomendacao.py` | Calcula a afinidade entre usuários. |
 | `testes.py` | Testa automaticamente as três partes. |
 | `RESULTADOS_TESTES.md` | Guarda exemplos reais de execução. |
-| `RELATORIO.pdf` | Relatório final do trabalho. |
+| `RELATORIO_FINAL.pdf` | Relatório final do trabalho, com os integrantes e RAs. |
 
 ## Parte 1 — Operações com conjuntos
 
@@ -134,7 +134,7 @@ O registro completo está em [RESULTADOS_TESTES.md](RESULTADOS_TESTES.md).
 
 ## Relatório
 
-O relatório final está em [RELATORIO.pdf](RELATORIO.pdf).
+O relatório final está em [RELATORIO_FINAL.pdf](RELATORIO_FINAL.pdf).
 
 ## Repositório
 
