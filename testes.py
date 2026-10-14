@@ -83,7 +83,7 @@ class TestesParte2(unittest.TestCase):
 
 
 class TestesParte3(unittest.TestCase):
-    def test_exemplo_do_pdf(self):
+    def test_recomendacao_principal(self):
         comparacoes, melhores = p3.recomendar("Ana", p3.USUARIOS_INICIAIS)
         indices = {item["nome"]: item["indice"] for item in comparacoes}
         self.assertAlmostEqual(indices["Bia"], 2 / 6)
